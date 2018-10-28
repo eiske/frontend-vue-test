@@ -11,7 +11,8 @@
                         type="text"
                         v-model="product.name"
                         required
-                        placeholder="Enter product name">
+                        placeholder="Enter product name"
+                        v-focus>
           </b-form-input>
         </b-form-group>
         <b-form-group label="Department:"
@@ -32,6 +33,14 @@
                         placeholder="Enter product price">
           </b-form-input>
         </b-form-group>
+        <b-form-group label="Status:"
+                      label-for="status">
+          <b-form-radio-group id="status"
+                              name="radioStatus">
+            <b-radio value="PROD_ACTIVE" v-model="product.status"> PROD_ACTIVE </b-radio>
+            <b-radio value="PROD_INACTIVE" v-model="product.status"> PROD_INACTIVE </b-radio>
+          </b-form-radio-group>
+        </b-form-group>
         <hr class="ruler">
         <b-button type="submit" variant="outline-success">Save Product</b-button>
         <b-button type="reset" variant="outline-secondary">Cancel</b-button>
@@ -50,7 +59,7 @@ export default {
         name: '',
         department: '',
         price: '',
-        status: 'PROD_ACTIVE',
+        status: '',
       },
       show: true,
       lastCreatedProduct: {},
@@ -69,11 +78,19 @@ export default {
       this.product.name = '';
       this.product.department = '';
       this.product.price = '';
+      this.product.status = '';
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => {
         this.show = true;
       });
+    },
+  },
+  directives: {
+    focus: {
+      inserted: function(el) {
+        el.focus();
+      },
     },
   },
 };

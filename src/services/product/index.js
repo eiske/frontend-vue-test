@@ -4,6 +4,7 @@ import productsGenerate from './products-generate';
 function getProductsFromStorage() {
   const localStorageProducts = localStorage.getItem('sc-products');
   if (localStorageProducts) {
+    console.log(JSON.parse(localStorageProducts))
     return JSON.parse(localStorageProducts);
   }
   const startupProducts = productsGenerate();
