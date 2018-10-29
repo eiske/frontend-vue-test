@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-alert dismissible variant="success" :show="!!lastCreatedProduct.name">
-      Product <strong>{{lastCreatedProduct.name}}</strong> was created! department: {{lastCreatedProduct.department}}; Price: {{lastCreatedProduct.price}}.
+      Product <strong>{{lastCreatedProduct.name}}</strong> was created! department: {{lastCreatedProduct.department}}; Price: {{lastCreatedProduct.price}}; Status: {{lastCreatedProduct.status}},
     </b-alert>
     <b-card title="Create Product">
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -27,8 +27,8 @@
         <b-form-group label="Price:"
                       label-for="price">
           <b-form-input id="price"
-                        type="number"
                         v-model="product.price"
+                        v-money="money"
                         required
                         placeholder="Enter product price">
           </b-form-input>
@@ -36,9 +36,10 @@
         <b-form-group label="Status:"
                       label-for="status">
           <b-form-radio-group id="status"
-                              name="radioStatus">
-            <b-radio value="PROD_ACTIVE" v-model="product.status"> PROD_ACTIVE </b-radio>
-            <b-radio value="PROD_INACTIVE" v-model="product.status"> PROD_INACTIVE </b-radio>
+                              name="radioStatus"
+                              v-model="product.status">
+            <b-radio value="PROD_ACTIVE">ACTIVE</b-radio>
+            <b-radio value="PROD_INACTIVE">INACTIVE</b-radio>
           </b-form-radio-group>
         </b-form-group>
         <hr class="ruler">
@@ -51,6 +52,7 @@
 
 <script>
 import productService from '@/services/product';
+import {VMoney} from 'v-money';
 
 export default {
   data() {
@@ -59,7 +61,15 @@ export default {
         name: '',
         department: '',
         price: '',
-        status: '',
+        status: 'PROD_ACTIVE',
+      },
+      money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'R$ ',
+          suffix: '',
+          precision: 2,
+          masked: false,
       },
       show: true,
       lastCreatedProduct: {},
@@ -67,6 +77,7 @@ export default {
   },
   methods: {
     onSubmit(evt) {
+      console.log(this.product);
       evt.preventDefault();
       productService.create(this.product);
       this.lastCreatedProduct = { ...this.product };
@@ -78,7 +89,7 @@ export default {
       this.product.name = '';
       this.product.department = '';
       this.product.price = '';
-      this.product.status = '';
+      this.product.status = 'PROD_ACTIVE';
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => {
@@ -92,6 +103,7 @@ export default {
         el.focus();
       },
     },
+    money: VMoney
   },
 };
 </script>

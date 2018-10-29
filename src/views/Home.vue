@@ -3,11 +3,11 @@
     <b-form>
       <b-input v-model="filter" class="mb-2 mr-sm-2 mb-sm-0" size="lg" placeholder="Search..." />
     </b-form>
-    <b-table bordered striped hover :items="products" :fields="tableFields" :filter="filter" :perPage="20" :currentPage='currentPage' @filtered="onFiltered">
+    <b-table bordered striped hover :items="products" :fields="tableFields" :filter="filter" :perPage="20" :currentPage='currentPage' @filtered="onFiltered" @row-clicked="click">
       <template slot="date" slot-scope="data"> 
         {{data.value | formatDate}}
       </template>
-      <template slot="price" slot-scope="data"> 
+      <template slot="price" slot-scope="data" v-money="money"> 
         {{data.value | formatPrice}}
       </template>
       <template slot="status" slot-scope="data"> 
@@ -23,6 +23,7 @@
 // @ is an alias to /src
 import productService from '@/services/product';
 import formatDate from '@/components/formatProductList.js';
+import {VMoney} from 'v-money';;
 
 export default {
   name: 'home',
@@ -47,6 +48,13 @@ export default {
       this.totalRow = filteredItems.length
       this.currentPage = 1
     },
+    click (evt) {
+      //console.log(evt),
+      this.$router.push('detail/' + evt.id)
+    }
+  },
+  directives: {
+    money: VMoney
   },
 };
 </script>
