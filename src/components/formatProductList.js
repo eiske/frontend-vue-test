@@ -11,7 +11,7 @@ Vue.filter('formatDate', function(value) {
 Vue.filter('formatPrice', function(value) {
     console.log(Status)
     if (value) {
-        return 'R$' + value.replace('.', ',')
+        return 'R$ ' + value.replace('.', ',')
     }
 });
 

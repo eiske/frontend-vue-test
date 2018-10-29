@@ -66,7 +66,7 @@ export default {
       money: {
           decimal: ',',
           thousands: '.',
-          prefix: 'R$ ',
+          prefix: '',
           suffix: '',
           precision: 2,
           masked: false,
@@ -103,7 +103,7 @@ export default {
         el.focus();
       },
     },
-    money: VMoney
+    money: VMoney,
   },
 };
 </script>

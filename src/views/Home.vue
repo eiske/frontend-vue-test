@@ -7,7 +7,7 @@
       <template slot="date" slot-scope="data"> 
         {{data.value | formatDate}}
       </template>
-      <template slot="price" slot-scope="data" v-money="money"> 
+      <template slot="price" slot-scope="data"> 
         {{data.value | formatPrice}}
       </template>
       <template slot="status" slot-scope="data"> 
@@ -34,7 +34,7 @@ export default {
       tableFields: [
         { key: 'name', label: 'Product', sortable: true },
         { key: 'department', label: 'Department', sortable: true },
-        { key: 'price', label: 'Price', sortable: true },
+        { key: 'price', label: 'Price', sortable: true, },
         { key: 'date', label: 'Last Modified', sortable: true },
         { key: 'status', label: 'Status', sortable: true },
       ],
@@ -50,7 +50,7 @@ export default {
     },
     click (evt) {
       //console.log(evt),
-      this.$router.push('detail/' + evt.id)
+      this.$router.push('detail/'+evt.id)
     }
   },
   directives: {
