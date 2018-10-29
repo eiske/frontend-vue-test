@@ -12,6 +12,7 @@
     "bootstrap-vue": "^2.0.0-rc.11",
     "faker": "^4.1.0",
     "moment": "^2.22.2",
+    "v-money": "^0.8.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
