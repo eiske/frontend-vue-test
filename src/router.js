@@ -27,5 +27,10 @@ export default new Router({
       name: 'detail',
       component: Detail,
     },
+    {
+      path: '/update/:id',
+      name: 'update',
+      component: () => import('./views/Create.vue'),
+    },
   ],
 });

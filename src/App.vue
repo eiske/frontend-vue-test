@@ -9,8 +9,11 @@
         <b-button :to="{name: 'list'}" v-if="$route.name !== 'list'" variant="outline-primary" active-class="">
             List Products
         </b-button>
-        <b-button :to="{name: 'create'}" v-if="$route.name !== 'create'" variant="outline-primary" active-class="">
+        <b-button :to="{name: 'create'}" v-if="$route.name !== 'create' && $route.name !== 'update'" variant="outline-primary" active-class="">
             Create Product
+        </b-button>
+        <b-button :to="{name: 'update', params: $route.params.id}" v-if="$route.name === 'detail'" variant="outline-primary" active-class="">
+            Update Product
         </b-button>
       </div>
     </div>
