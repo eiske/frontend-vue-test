@@ -51,7 +51,7 @@ export default {
     click (evt) {
       //console.log(evt),
       this.$router.push('detail/'+evt.id)
-    }
+    },
   },
   directives: {
     money: VMoney

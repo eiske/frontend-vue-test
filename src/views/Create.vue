@@ -1,9 +1,9 @@
 <template>
   <div>
     <b-alert dismissible variant="success" :show="!!lastCreatedProduct.name">
-      Product <strong>{{lastCreatedProduct.name}}</strong> was created! department: {{lastCreatedProduct.department}}; Price: {{lastCreatedProduct.price}}; Status: {{lastCreatedProduct.status}},
+      Product <strong>{{lastCreatedProduct.name}}</strong> was created! department: {{lastCreatedProduct.department}}; Price: {{lastCreatedProduct.price}}; Status: {{lastCreatedProduct.status}};
     </b-alert>
-    <b-card title="Create Product">
+    <b-card v-bind:title="functionTitle">
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group label="Product:"
                       label-for="name">
@@ -49,11 +49,9 @@
     </b-card>
   </div>
 </template>
-
 <script>
 import productService from '@/services/product';
 import {VMoney} from 'v-money';
-
 export default {
   data() {
     return {
@@ -77,11 +75,17 @@ export default {
   },
   methods: {
     onSubmit(evt) {
-      console.log(this.product);
+      //console.log(this.product);
       evt.preventDefault();
-      productService.create(this.product);
-      this.lastCreatedProduct = { ...this.product };
-      this.onReset();
+      if (this.product.id) {
+        productService.update(this.product);
+        this.lastCreatedProduct = { ...this.product };
+        this.onReset();
+      } else {
+        productService.create(this.product);
+        this.lastCreatedProduct = { ...this.product };
+        this.onReset();
+      }
     },
     onReset(evt) {
       if (evt) evt.preventDefault();
@@ -104,6 +108,23 @@ export default {
       },
     },
     money: VMoney,
+  },
+
+  mounted: function() {
+    if (this.$router.currentRoute.params.id) {
+      const product = productService.get(this.$router.currentRoute.params.id);
+      console.log(product);
+      this.product = {...product};
+    }
+  },
+  computed: {
+    functionTitle: function() {
+      if (this.$router.currentRoute.params.id) {
+        return 'Update Product';
+      } else {
+        return 'Create Product';
+      }
+    },
   },
 };
 </script>
